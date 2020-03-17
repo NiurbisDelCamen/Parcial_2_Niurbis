@@ -78,7 +78,8 @@ namespace Parcial2.BLL
             LLamada llamada = new LLamada();
             try
             {
-                llamada = db.Llamadas.Include(o => o.Llamadas).Where(p => p.LlamadaId == id).SingleOrDefault();
+                llamada = db.Llamadas.Where(x => x.LlamadaId == id).Include(o => o.Llamadas).SingleOrDefault();
+                    
             }catch(Exception)
             {
                 throw;

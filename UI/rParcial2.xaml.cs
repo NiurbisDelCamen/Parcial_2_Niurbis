@@ -100,19 +100,16 @@ namespace Parcial2.UI
             bool paso = false;
             if (!Validar())
                 return;
-            if (llamada.LlamadaId == 0)
+           if(string.IsNullOrEmpty(LlamadaIdTextBox.Text) || (LlamadaIdTextBox.Text =="0"))
                 paso = LlamadasBLL.Guardar(llamada);
             else
             {
                 if (ExisteBD())
                 {
-                    paso = LlamadasBLL.Modificar(llamada);
-                }
-                else
-                {
-                    MessageBox.Show("No se puede modificar una llamada que no existe");
+                    MessageBox.Show("No se puede agregar llamada que no existe");
                     return;
                 }
+                paso = LlamadasBLL.Modificar(llamada);
             }
             if (paso)
             {
@@ -127,13 +124,17 @@ namespace Parcial2.UI
 
         private void EliminarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (LlamadasBLL.Eliminar(llamada.LlamadaId))
+            int id;
+            int.TryParse(LlamadaIdTextBox.Text, out id);
+            Limpiar();
+            if(LlamadasBLL.Eliminar(id))
             {
-                MessageBox.Show("Eliminado");
-                Limpiar();
+                MessageBox.Show("Eliminado", "Exito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
-                MessageBox.Show("No se puede eliminar una llamada que no existe");
+            {
+                MessageBox.Show("No se pudo Guardar", "Fallo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         private void Recargar()
         {
@@ -142,26 +143,24 @@ namespace Parcial2.UI
         }
         private void BuscarButton_Click(object sender, RoutedEventArgs e)
         {
-            LLamada LlamadaAnterior = LlamadasBLL.Buscar(llamada.LlamadaId);
-            if (LlamadaAnterior != null)
+            int id;
+            int.TryParse(LlamadaIdTextBox.Text, out id);
+            llamada=LlamadasBLL.Buscar(id);
+            if(llamada !=null)
             {
-                llamada = LlamadaAnterior;
+                this.DataContext = llamada;
                 Recargar();
             }
-            else
-            {
-                Limpiar();
-                MessageBox.Show("Llamada No Encontrada");
-            }
+
 
         }
 
         private void RemoverButton_Click(object sender, RoutedEventArgs e)
         {
-            if (LlamadaDataGrid.Items.Count > 1 && LlamadaDataGrid.SelectedIndex < LlamadaDataGrid.Items.Count - 1)
+            if (LlamadaDataGrid.Items.Count > 0 && LlamadaDataGrid.SelectedItem !=null)
             {
-                llamada.Llamadas.RemoveAt(LlamadaDataGrid.SelectedIndex);
-                Recargar();
+                this.detalles.RemoveAt(LlamadaDataGrid.SelectedIndex);
+                CargaGrid();
             }
         }
 
