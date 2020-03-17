@@ -34,6 +34,8 @@ namespace Parcial2.UI
         {
             LlamadaIdTextBox.Text = "0";
             DescripcionTextBox.Text = string.Empty;
+            ProblemaTextBox.Text = string.Empty;
+            SolucionTextBox.Text = string.Empty;
             LlamadaDataGrid.ItemsSource = new List<LlamadaDetalle>();
 
         }
@@ -52,6 +54,7 @@ namespace Parcial2.UI
         private bool Validar()
         {
             bool paso = true;
+
             if (string.IsNullOrWhiteSpace(LlamadaIdTextBox.Text))
                 paso = false;
             else
@@ -64,29 +67,27 @@ namespace Parcial2.UI
                 {
                     paso = false;
                 }
-                if (string.IsNullOrWhiteSpace(DescripcionTextBox.Text))
-                    paso = false;
-                else
-                {
-                    foreach (var caracter in DescripcionTextBox.Text)
-                    {
-                        if (!char.IsLetter(caracter) && !char.IsWhiteSpace(caracter))
-                            paso = false;
-                    }
-                }
-                if (LlamadaDataGrid.Columns.Count == 0)
-                {
-                    MessageBox.Show("Todos Los campos deben estar llenos y debe agregarlos....!!!!!");
-                    LlamadaDataGrid.Focus();
-                    paso = false;
-                }
-                if (paso == false)
-                {
-                    MessageBox.Show("Los Datos son invalidos");
-
-                }
             }
+
+            if (string.IsNullOrWhiteSpace(DescripcionTextBox.Text))
+                paso = false;
+
+
+            if (LlamadaDataGrid.Columns.Count == 0)
+            {
+                MessageBox.Show("Debe llenar todos los campos, son obligatorios");
+                LlamadaDataGrid.Focus();
+                paso = false;
+            }
+
+            if (paso == false)
+                MessageBox.Show(" Los Datos invalidos");
+
             return paso;
+
+
+
+
         }
 
         private bool ExisteBD()
@@ -98,19 +99,25 @@ namespace Parcial2.UI
         private void GuardarButton_Click(object sender, RoutedEventArgs e)
         {
             bool paso = false;
+
             if (!Validar())
                 return;
-           if(string.IsNullOrEmpty(LlamadaIdTextBox.Text) || (LlamadaIdTextBox.Text =="0"))
+
+            if (llamada.LlamadaId == 0)
                 paso = LlamadasBLL.Guardar(llamada);
             else
             {
                 if (ExisteBD())
                 {
-                    MessageBox.Show("No se puede agregar llamada que no existe");
+                    paso = LlamadasBLL.Modificar(llamada);
+                }
+                else
+                {
+                    MessageBox.Show("No se Puede Modificar una llamada que no existe");
                     return;
                 }
-                paso = LlamadasBLL.Modificar(llamada);
             }
+
             if (paso)
             {
                 Limpiar();
@@ -118,23 +125,19 @@ namespace Parcial2.UI
             }
             else
             {
-                MessageBox.Show("La llamada no pudo guardarse");
+                MessageBox.Show("el Problema No se Pudo Guardar");
             }
         }
 
         private void EliminarButton_Click(object sender, RoutedEventArgs e)
         {
-            int id;
-            int.TryParse(LlamadaIdTextBox.Text, out id);
-            Limpiar();
-            if(LlamadasBLL.Eliminar(id))
+            if (LlamadasBLL.Eliminar(llamada.LlamadaId))
             {
-                MessageBox.Show("Eliminado", "Exito", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Eliminado");
+                Limpiar();
             }
             else
-            {
-                MessageBox.Show("No se pudo Guardar", "Fallo", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+                MessageBox.Show("No se pudo eliminar una llamada no existe");
         }
         private void Recargar()
         {
@@ -143,13 +146,17 @@ namespace Parcial2.UI
         }
         private void BuscarButton_Click(object sender, RoutedEventArgs e)
         {
-            int id;
-            int.TryParse(LlamadaIdTextBox.Text, out id);
-            llamada=LlamadasBLL.Buscar(id);
-            if(llamada !=null)
+
+            LLamada anterior = LlamadasBLL.Buscar(Convert.ToInt32(LlamadaIdTextBox.Text));
+
+            if (anterior != null)
             {
-                this.DataContext = llamada;
+                llamada = anterior;
                 Recargar();
+            }
+            else
+            {
+                MessageBox.Show("llamadas no encontrada");
             }
 
 

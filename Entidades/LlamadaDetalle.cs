@@ -16,15 +16,16 @@ namespace Parcial2.Entidades
         public LlamadaDetalle()
         {
             Id = 0;
+           
             Problema = string.Empty;
             Solucion = string.Empty;
         }
         public LlamadaDetalle(int lLamadaId, string problema, string solucion)
         {
             Id = 0;
-            lLamadaId = LlamadaId;
-            problema = Problema;
-            solucion = Solucion;
+            LlamadaId = lLamadaId;
+            Problema = problema;
+            Solucion = solucion;
         }
     }
 }

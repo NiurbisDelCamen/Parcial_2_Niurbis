@@ -37,7 +37,7 @@ namespace Parcial2.BLL
             try
             {
                 db.Database.ExecuteSqlRaw($"DELETE FROM LlamadaDetalle Where LlamadaId = {llamada.LlamadaId}");
-                foreach(var item in llamada.Llamadas)
+                foreach (var item in llamada.Llamadas)
                 {
                     db.Entry(item).State = EntityState.Added;
                 }
@@ -78,7 +78,7 @@ namespace Parcial2.BLL
             LLamada llamada = new LLamada();
             try
             {
-                llamada = db.Llamadas.Where(x => x.LlamadaId == id).Include(o => o.Llamadas).SingleOrDefault();
+                llamada = db.Llamadas.Where(x => x.LlamadaId == id).Include(o => o.Llamadas).FirstOrDefault();
                     
             }catch(Exception)
             {
