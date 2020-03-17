@@ -30,9 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entidades\" />
     <Folder Include="DATA\" />
-    <Folder Include="BLL\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parcial2.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,16 @@ namespace Parcial2
     {
         public MainWindow()
         {
+           
             InitializeComponent();
+            
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            rParcial2 rParcial = new rParcial2();
+            rParcial.Show();
         }
     }
 }

@@ -13,5 +13,11 @@ namespace Parcial2
     /// </summary>
     public partial class App : Application
     {
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show($"Ocurrio una excepcion no controlada {e.Exception.Message}");
+                e.Handled = true;
+
+        }
     }
 }

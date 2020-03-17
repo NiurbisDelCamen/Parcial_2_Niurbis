@@ -25,6 +25,56 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
+        <Label Content="LLamadaId" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <Label Content="Descripcion" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" VerticalAlignment="Center"/>
+        <Label Content="Problema" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" VerticalAlignment="Center"/>
+        <Label Content="Solucion" Grid.Column="1" HorizontalAlignment="Left" Margin="223,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="48" Width="72" Grid.RowSpan="2"/>
+        <TextBox x:Name="LlamadaIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="88,19,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <TextBox.Text>
+                <Binding Path="LLamadaId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="DescripcionTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="88,0,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+            <TextBox.Text>
+                <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="ProblemaTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="88,0,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+            <TextBox.Text>
+                <Binding Path="Problema" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <TextBox x:Name="SolucionTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="283,13,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.576"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+            <TextBox.Text>
+                <Binding Path="Problema" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <ExceptionValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
 
 
@@ -47,20 +97,24 @@
             </Button.Background>
         </Button>
 
-        <Button x:Name="BuscarButton" Content="Buscar" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="212,8,0,8" Grid.Row="1" Width="88" FontWeight="Bold" Click="BuscarButton_Click">
+        <Button x:Name="BuscarButton" Content="Buscar" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="223,12,0,5" Grid.Row="2" Width="88" FontWeight="Bold" Click="BuscarButton_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/Resources/BuscarImage.png" Stretch="Uniform" AlignmentX="Left"/>
             </Button.Background>
         </Button>
 
-        <Button x:Name="RemoverButton" Content="Remover" Grid.Column="1" HorizontalAlignment="Left"  Margin="10,0,0,0" Grid.Row="7" VerticalAlignment="Center" FontWeight="Bold" Click="RemoverButton_Click">
+        <Button x:Name="RemoverButton" Content="Remover" Grid.Column="1" HorizontalAlignment="Left"  Margin="10,57,0,0" Grid.Row="6" VerticalAlignment="Top" FontWeight="Bold" Click="RemoverButton_Click">
             <Button.Background>
                 <ImageBrush/>
             </Button.Background>
         </Button>
-        <Button x:Name="AgregarButton" Content="Agregar" Grid.Column="1" HorizontalAlignment="Left"  Margin="603,3,0,7" Grid.Row="5" FontWeight="Bold" Click="AgregarButton_Click" RenderTransformOrigin="0.5,0.5" Width="88">
+        <Button x:Name="AgregarButton" Content="Agregar" Grid.Column="1" HorizontalAlignment="Left"  Margin="423,4,0,6" Grid.Row="4" FontWeight="Bold" Click="AgregarButton_Click" RenderTransformOrigin="0.5,0.5" Width="88"/>
 
-        </Button>
+        <DataGrid x:Name="LlamadaDataGrid" Grid.Row="4" Margin="2,49,365,51" Grid.RowSpan="3" Grid.ColumnSpan="2">
+            <DataGrid.ItemsSource>
+                <Binding Path="Llamadas" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+            </DataGrid.ItemsSource>
+        </DataGrid>
 
 
 
